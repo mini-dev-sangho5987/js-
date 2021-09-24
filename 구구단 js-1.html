@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>구구단</title>
+  </head>
+  <body>
+    <input type="number" id="txt" onchange="구구단(document.getElementById('txt').value)">
+    <script>
+      구구단 = n => {
+        if (n == 0) {
+          alert('응 안됨');
+        } else {
+          for (let i = 1; i < 10; i++) {
+            document.write(n+" * "+i+"="+n*i+"</br>");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
