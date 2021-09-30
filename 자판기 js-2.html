@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>자판기</title>
+    <style media="screen">
+      header {width:30rem;height: 70px;line-height: 70px;background-color: tomato;margin: 0 auto;text-align: center;}
+      h1 {margin: 0; padding: 0;}
+      section {height: 42rem;width: 30rem;background: red;margin: 0 auto;}
+      section > span {width: 30rem;height: 7rem;background-color: black;display: block;}
+      input[type='button'] {float: left;width: 9rem;height: 3rem;margin: 2rem 0.5rem;}
+
+      #sum {width: 60%;float: right;height: 2rem;background-color: white;border: 15px solid red;border-top: 0px;box-sizing: border-box;}
+      #add {overflow-y: scroll;width: 60%;float: right;height: 12rem;background-color: white;border: 15px solid red;border-bottom: 0px;box-sizing: border-box;}
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>자판기</h1>
+    </header>
+    <section>
+      <span>
+        <input type="button" value="핫식스 1500" onclick="sum(['핫식스',1500])">
+        <input type="button" value="삼다수 800" onclick="sum(['삼다수',800])">
+        <input type="button" value="코코팜 700" onclick="sum(['코코팜',700])">
+      </span>
+      <span>
+        <input type="button" value="커피 2500" onclick="sum(['커피',2500])">
+        <input type="button" value="라때 3000" onclick="sum(['라때',3000])">
+        <input type="button" value="핫초코 1500" onclick="sum(['핫초코',1500])">
+      </span>
+      <span>
+        <input type="button" value="과자1 1000" onclick="sum(['과자1',1000])">
+        <input type="button" value="과자2 1200" onclick="sum(['과자2',1200])">
+        <input type="button" value="과자3 1500" onclick="sum(['과자3',1500])">
+      </span>
+      <span>
+        <input type="button" value="펩시콜라 1000" onclick="sum(['펩시콜라',1000])">
+        <input type="button" value="칠성사이다 1000" onclick="sum(['칠성사이다',1000])">
+        <input type="button" value="환타 1000" onclick="sum(['환타',1000])">
+      </span>
+      <input type="button" value="완료" onclick="cl()">
+      <div id="add">
+
+      </div>
+      <div id="sum">
+
+      </div>
+    </section>
+    <script>
+    let n = [[],[]];
+    let j = 0;
+    function sum(arr) {
+      j+=arr[1];
+      n[0].push(arr[0]);
+      n[1].push(arr[1]);
+      document.getElementById('sum').innerHTML = j;
+      document.getElementById('add').innerHTML += ("<p>"+arr[0]+","+arr[1]+"원</p>");
+    }
+    function cl() {
+      document.getElementById('sum').innerHTML = "";
+      document.getElementById('add').innerHTML = "";
+      alert(j);
+    }
+    </script>
+  </body>
+</html>
