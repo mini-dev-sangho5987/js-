@@ -6,12 +6,12 @@
     <style media="screen">
       header {width:30rem;height: 70px;line-height: 70px;background-color: tomato;margin: 0 auto;text-align: center;}
       h1 {margin: 0; padding: 0;}
-      section {height: 42rem;width: 30rem;background: red;margin: 0 auto;}
+      section {height: 35rem;width: 30rem;background: red;margin: 0 auto;}
       section > span {width: 30rem;height: 7rem;background-color: black;display: block;}
-      input[type='button'] {float: left;width: 9rem;height: 3rem;margin: 2rem 0.5rem;}
-
-      #sum {width: 60%;float: right;height: 2rem;background-color: white;border: 15px solid red;border-top: 0px;box-sizing: border-box;}
-      #add {overflow-y: scroll;width: 60%;float: right;height: 12rem;background-color: white;border: 15px solid red;border-bottom: 0px;box-sizing: border-box;}
+      .btn {float: left;width: 9rem;height: 3rem;margin: 2rem 0.5rem;}
+      #btn {width: 40%;float: left;text-align: center;}
+      #sum {width: 60%;float: right;height: 4rem;line-height: 4rem;text-align: center;background-color: white;border: 15px solid red;border-top: 0px;box-sizing: border-box;}
+      #add {overflow-y: scroll;width: 60%;float: right;height: 10rem;background-color: white;border: 15px solid red;border-bottom: 0px;box-sizing: border-box;}
     </style>
   </head>
   <body>
@@ -20,47 +20,116 @@
     </header>
     <section>
       <span>
-        <input type="button" value="핫식스 1500" onclick="sum(['핫식스',1500])">
-        <input type="button" value="삼다수 800" onclick="sum(['삼다수',800])">
-        <input type="button" value="코코팜 700" onclick="sum(['코코팜',700])">
+        <input type="button" value="핫식스 1500" onclick="sum(['핫식스',1500])" class="btn">
+        <input type="button" value="삼다수 800" onclick="sum(['삼다수',800])" class="btn">
+        <input type="button" value="코코팜 700" onclick="sum(['코코팜',700])" class="btn">
       </span>
       <span>
-        <input type="button" value="커피 2500" onclick="sum(['커피',2500])">
-        <input type="button" value="라때 3000" onclick="sum(['라때',3000])">
-        <input type="button" value="핫초코 1500" onclick="sum(['핫초코',1500])">
+        <input type="button" value="커피 2500" onclick="sum(['커피',2500])" class="btn">
+        <input type="button" value="라때 3000" onclick="sum(['라때',3000])" class="btn">
+        <input type="button" value="핫초코 1500" onclick="sum(['핫초코',1500])" class="btn">
       </span>
       <span>
-        <input type="button" value="과자1 1000" onclick="sum(['과자1',1000])">
-        <input type="button" value="과자2 1200" onclick="sum(['과자2',1200])">
-        <input type="button" value="과자3 1500" onclick="sum(['과자3',1500])">
+        <input type="button" value="펩시콜라 1000" onclick="sum(['펩시콜라',1000])" class="btn">
+        <input type="button" value="칠성사이다 1000" onclick="sum(['칠성사이다',1000])" class="btn">
+        <input type="button" value="환타 1000" onclick="sum(['환타',1000])" class="btn">
       </span>
-      <span>
-        <input type="button" value="펩시콜라 1000" onclick="sum(['펩시콜라',1000])">
-        <input type="button" value="칠성사이다 1000" onclick="sum(['칠성사이다',1000])">
-        <input type="button" value="환타 1000" onclick="sum(['환타',1000])">
-      </span>
-      <input type="button" value="완료" onclick="cl()">
+      <div id="btn">
+        <input type="button" value="완료" onclick="cl();" class="btn" style="display:block;margin: 1.5rem;">
+      </div>
       <div id="add">
 
       </div>
       <div id="sum">
-
+        0
       </div>
     </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-    let n = [[],[]];
-    let j = 0;
-    function sum(arr) {
-      j+=arr[1];
-      n[0].push(arr[0]);
-      n[1].push(arr[1]);
-      document.getElementById('sum').innerHTML = j;
-      document.getElementById('add').innerHTML += ("<p>"+arr[0]+","+arr[1]+"원</p>");
-    }
-    function cl() {
+    let 돈 = 5000;
+    let n = {
+      총가격:0,
+      핫식스:{
+        금액:1500,
+        개:0
+      },
+      삼다수:{
+        금액:800,
+        개:0
+      },
+      코코팜:{
+        금액:700,
+        개:0
+      },
+      커피:{
+        금액:2500,
+        개:0
+      },
+      라때:{
+        금액:3000,
+        개:0
+      },
+      핫초코:{
+        금액:1500,
+        개:0
+      },
+      펩시콜라:{
+        금액:1000,
+        개:0
+      },
+      칠성사이다:{
+        금액:1000,
+        개:0
+      },
+      환타:{
+        금액:1000,
+        개:0
+      }
+    };
+    function printlist() {
       document.getElementById('sum').innerHTML = "";
       document.getElementById('add').innerHTML = "";
-      alert(j);
+      for (i in n) {
+        if (i != '총가격') {
+          if (n[i].개 != 0) {
+            let p = 'mn("'+i+'")';
+            let l = '<input type="button" value="✖" onclick=\''+p+'\'>';
+            document.getElementById('add').innerHTML += ("<p>"+i+","+n[i].개+"개\n</p>"+l);
+          }
+        }
+      }
+      document.getElementById('sum').innerHTML = n.총가격;
+    }
+    function sum(arr) {
+      n.총가격+=arr[1];
+      n[arr[0]].개+=1;
+      printlist();
+    }
+    function cl() {
+      if (n.총가격 <= 돈) {
+        alert(n.총가격+"원이 결제 되었습니다. 잔액:"+(돈-n.총가격)+"원");
+        돈 -= n.총가격;
+        document.getElementById('sum').innerHTML = "0";
+        document.getElementById('add').innerHTML = "";
+        n.총가격 = 0;
+        for (i in n) {
+          n[i].개 = 0;
+        }
+      } else {
+        if (돈 == 0) {
+          if (confirm("돈 50000원 패키지를 결제하시겠습니까?\n가격 1만원")) {
+            document.location.href='mailto:sangho5987@gmail.com?Subject=결제문의&body=사이트에서 옴';
+          }
+        } else {
+          alert('돈이 '+(n.총가격-돈)+"원 만큼 부족합니다");
+        }
+      }
+    }
+    function mn(k) {
+      console.log(k);
+      n.총가격 -= n[k].금액;
+      n[k].개 -= 1;
+      printlist();
     }
     </script>
   </body>
